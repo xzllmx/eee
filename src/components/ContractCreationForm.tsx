@@ -56,11 +56,18 @@ export default function ContractCreationForm({ contractorId, onSuccess }: Contra
 
     try {
       const fileName = `contracts/${contractorId}/${Date.now()}-${contractFile.name}`;
-      const url = await uploadToB2(contractFile, fileName, (progress) => {
-        setUploadProgress(progress);
-      });
+      const result = await uploadToB2(contractFile, fileName);
 
-      setContractDocumentUrl(url);
+      if (result.error) {
+        throw new Error(result.error);
+      }
+
+      if (!result.publicUrl) {
+        throw new Error('No URL returned from upload');
+      }
+
+      // Store only the URL string, not the entire response object
+      setContractDocumentUrl(result.publicUrl);
       setUploadProgress(0);
     } catch (err: any) {
       setError(`Failed to upload document: ${err.message}`);

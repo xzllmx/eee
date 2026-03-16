@@ -9,6 +9,8 @@ import {
 import ContractCreationForm from '../components/ContractCreationForm';
 import MilestoneCreationForm from '../components/MilestoneCreationForm';
 import PhotoLockUploadForm from '../components/PhotoLockUploadForm';
+import ContractDocuments from '../components/ContractDocuments';
+import ContractDetailsView from '../components/ContractDetailsView';
 
 interface Contract {
   id: string;
@@ -747,8 +749,16 @@ export default function ContractsEnhanced() {
             </div>
           )}
 
+          {/* Contract Documents Section */}
+          <ContractDocuments
+            contractId={selectedContract.id}
+            contractNumber={selectedContract.contract_number}
+            contractDocumentUrl={selectedContract.contract_document_url}
+            clientEmail={selectedContract.client_email}
+          />
+
           {/* Milestones Section */}
-          <div className="bg-white rounded-lg shadow-lg p-8">
+          <div className="bg-white rounded-lg shadow-lg p-8 mt-8">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-bold text-gray-800">Milestones</h2>
               <button
